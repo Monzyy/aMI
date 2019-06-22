@@ -99,6 +99,7 @@ def top_k_recommendations(user_id, graph, k=10):
     neighbors = graph[user_node]
     for neighbor in neighbors:
         already_seen_items.append(neighbor[1])
+    # filtering away already seen items and nodes that are not items
     pr = {k: v for k, v in pr.items() if k[0] not in already_seen_items and k[1] == 'item'}
     return sorted(pr.items(), reverse=True, key=lambda kv: kv[1])[:k]
 
@@ -157,7 +158,7 @@ for node in G.nodes:
 
 
 user_id = 1
-print(top_k_hitrate(1, G))
+print(top_k_hitrate(user_id, G))
 #print(average_top_k_hitrate(G, k=10))
 recs = top_k_recommendations(user_id, G)
 for k, v in recs:
